@@ -60,8 +60,8 @@ class TestPageState extends State<TestPage> {
     payload.iosApplicationId = '5b8f6a4d396fa665fdc2b5e9';
 
     payload.pg = 'danal';
-    payload.method = 'card';
-//    payload.methods = ['card', 'phone', 'vbank', 'bank'];
+//    payload.method = 'card';
+    payload.methods = ['card', 'phone', 'vbank', 'bank'];
     payload.name = 'testUser';
     payload.price = 2000.0;
     payload.orderId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -81,6 +81,7 @@ class TestPageState extends State<TestPage> {
 
     Extra extra = Extra();
     extra.appScheme = 'bootpayFlutterSample';
+    extra.quotas = [1,2,3];
 
     Item item1 = Item();
     item1.itemName = "미\"키's 마우스"; // 주문정보에 담길 상품명

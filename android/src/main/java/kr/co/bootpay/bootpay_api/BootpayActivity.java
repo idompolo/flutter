@@ -5,9 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import kr.co.bootpay.Bootpay;
@@ -20,6 +26,7 @@ import kr.co.bootpay.listener.ErrorListener;
 import kr.co.bootpay.listener.ReadyListener;
 import kr.co.bootpay.model.BootExtra;
 import kr.co.bootpay.model.BootUser;
+import kr.co.bootpay.model.BootpayOneStore;
 import kr.co.bootpay.model.Item;
 import kr.co.bootpay.model.Payload;
 
@@ -34,16 +41,196 @@ public class BootpayActivity extends Activity {
         String itemsString = this.getIntent().getStringExtra("items");
         String extraString = this.getIntent().getStringExtra("extra");
 
+//        Payload payload = new Payload();
         BootUser bootUser = new BootUser();
         List<Item> items = new ArrayList<>();
         BootExtra bootExtra = new BootExtra();
 
-        Payload payload = new Gson().fromJson(payloadString, Payload.class);
-        if(userString != null && !userString.isEmpty()) bootUser =  new Gson().fromJson(userString, BootUser.class);
-        if(itemsString != null && !itemsString.isEmpty()) items =  new Gson().fromJson(itemsString, new TypeToken<List<Item>>(){}.getType());
-        if(extraString != null && !extraString.isEmpty()) bootExtra =  new Gson().fromJson(extraString, BootExtra.class);
+
+        Payload payload = getPayload(payloadString);
+        if(userString != null && !userString.isEmpty()) bootUser =  getBootUser(userString);
+        if(itemsString != null && !itemsString.isEmpty()) items =  getItemList(itemsString);
+        if(extraString != null && !extraString.isEmpty()) bootExtra =  getBootExtra(extraString);
 
         goBootpayRequest(payload, bootUser, bootExtra, items);
+    }
+
+    //원인을 알 수 없는 gson 버그로 인해 json parser로 수정
+    Payload getPayload(String json) {
+        Payload payload = new Payload();
+        try {
+            JSONObject object = new JSONObject(json);
+
+            String application_id = object.getString("application_id");
+            String pg = object.getString("pg");
+            String method = object.getString("method");
+            JSONArray methods = object.getJSONArray("methods");
+            String name = object.getString("name");
+            Double price = object.getDouble("price");
+            Double tax_free = object.getDouble("tax_free");
+            String order_id = object.getString("order_id");
+            Boolean use_order_id = object.getBoolean("use_order_id");
+            String params = object.getString("params");
+            String account_expire_at = object.getString("account_expire_at");
+            Boolean show_agree_window = object.getBoolean("show_agree_window");
+            String boot_key = object.getString("boot_key");
+            String ux = object.getString("ux");
+            Boolean sms_use = object.getBoolean("sms_use");
+            String easy_pay_user_token = object.getString("easy_pay_user_token");
+
+            if(isExist(application_id)) payload.setApplication_id(application_id);
+            if(isExist(pg)) payload.setPg(pg);
+            if(isExist(method)) payload.setMethod(method);
+            if(methods != null && methods.length() > 0) {
+                List<String> methodList = new ArrayList<>();
+                for(int i = 0; i < methods.length(); i++) {
+                    methodList.add(methods.getString(i));
+                }
+                payload.setMethods(methodList);
+            }
+            if(isExist(name)) payload.setName(name);
+            payload.setPrice(price);
+            payload.setTax_free(tax_free);
+            if(isExist(order_id)) payload.setOrder_id(order_id);
+            payload.setUse_order_id(use_order_id);
+            if(isExist(params)) payload.setParams(params);
+            if(isExist(account_expire_at)) payload.setAccount_expire_at(account_expire_at);
+            payload.setShow_agree_window(show_agree_window);
+            if(isExist(boot_key)) payload.setBoot_key(boot_key);
+            if(isExist(ux)) payload.setUx(ux);
+            payload.setSms_use(sms_use);
+            if(isExist(easy_pay_user_token)) payload.setEasyPayUserToken(easy_pay_user_token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            payload = new Gson().fromJson(json, Payload.class);
+        }
+        return payload;
+    }
+
+    //원인을 알 수 없는 gson 버그로 인해 json parser로 수정
+    BootUser getBootUser(String json) {
+        BootUser bootUser = new BootUser();
+        try {
+            JSONObject object = new JSONObject(json);
+
+            String id = object.getString("id");
+            String username = object.getString("username");
+            String birth = object.getString("birth");
+            String email = object.getString("email");
+            int gender = object.getInt("gender");
+            String area = object.getString("area");
+            String phone = object.getString("phone");
+            String addr = object.getString("addr");
+
+            if(isExist(id)) bootUser.setID(id);
+            if(isExist(username)) bootUser.setUsername(username);
+            if(isExist(birth)) bootUser.setBirth(birth);
+            if(isExist(email)) bootUser.setEmail(email);
+            bootUser.setGender(gender);
+            if(isExist(area)) bootUser.setArea(area);
+            if(isExist(phone)) bootUser.setPhone(phone);
+            if(isExist(addr)) bootUser.setAddr(addr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            bootUser = new Gson().fromJson(json, BootUser.class);
+        }
+        return bootUser;
+    }
+
+    List<Item> getItemList(String json) {
+        List<Item> itemList = new ArrayList<>();
+
+        try {
+            JSONArray array = new JSONArray(json);
+            for(int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+
+                String item_name = object.getString("item_name");
+                int qty = object.getInt("qty");
+                String unique = object.getString("unique");
+                Double price = object.getDouble("price");
+                String cat1 = object.getString("cat1");
+                String cat2 = object.getString("cat2");
+                String cat3 = object.getString("cat3");
+
+                Item item = new Item(item_name, qty, unique, price, cat1, cat2, cat3);
+                itemList.add(item);
+            }
+        }   catch (JSONException e) {
+            e.printStackTrace();
+            itemList = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
+        }
+
+        return itemList;
+    }
+
+    //원인을 알 수 없는 gson 버그로 인해 json parser로 수정
+    BootExtra getBootExtra(String json) {
+        BootExtra bootExtra = new BootExtra();
+        BootpayOneStore oneStore = new BootpayOneStore();
+        try {
+            JSONObject object = new JSONObject(json);
+
+            String start_at = object.getString("start_at");
+            String end_at = object.getString("end_at");
+            Integer expire_month = object.getInt("expire_month");
+            boolean vbank_result = object.getBoolean("vbank_result");
+            JSONArray quotas = object.getJSONArray("quotas");
+
+            String app_scheme = object.getString("app_scheme");
+            String app_scheme_host = object.getString("app_scheme_host");
+            String ux = object.getString("ux");
+            String disp_cash_result = object.getString("disp_cash_result");
+            int escrow = object.getInt("escrow");
+
+//            if(isExist(start_at))
+
+            JSONObject jsonOneStore = object.getJSONObject("onestore");
+            if(jsonOneStore != null) {
+                String ad_id = jsonOneStore.getString("ad_id");
+                String sim_operator = jsonOneStore.getString("sim_operator");
+                String installer_package_name = jsonOneStore.getString("installer_package_name");
+
+                if(isExist(ad_id)) oneStore.ad_id = ad_id;
+                if(isExist(sim_operator)) oneStore.sim_operator = sim_operator;
+                if(isExist(installer_package_name)) oneStore.installer_package_name = installer_package_name;
+                bootExtra.setOnestore(oneStore);
+            }
+
+            if(isExist(start_at)) bootExtra.setStartAt(start_at);
+            if(isExist(end_at)) bootExtra.setEndAt(end_at);
+            bootExtra.setExpireMonth(expire_month);
+            bootExtra.setVbankResult(vbank_result);
+            if(quotas != null && quotas.length() > 0) {
+                List<Integer> quotaList = new ArrayList<>();
+                for(int i = 0; i < quotas.length(); i++) {
+                    quotaList.add(quotas.getInt(i));
+                }
+                bootExtra.setQuotas(toArray(quotaList));
+            }
+            if(isExist(app_scheme)) bootExtra.setApp_scheme(app_scheme);
+            if(isExist(app_scheme_host)) bootExtra.setApp_scheme_host(app_scheme_host);
+            if(isExist(ux)) bootExtra.setUx(ux);
+            if(isExist(disp_cash_result)) bootExtra.setDisp_cash_result(disp_cash_result);
+            bootExtra.setEscrow(escrow);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            bootExtra = new Gson().fromJson(json, BootExtra.class);
+        }
+        return bootExtra;
+    }
+
+    Boolean isExist(String value) {
+        return !(value == null || value.isEmpty());
+    }
+
+    int[] toArray(List<Integer> list) {
+        int[] ret = new int[ list.size() ];
+        int i = 0;
+        for(Iterator<Integer> it = list.iterator();
+            it.hasNext();
+            ret[i++] = it.next() );
+        return ret;
     }
 
     void goBootpayRequest(Payload payload, BootUser user, BootExtra extra, List<Item> items) {
