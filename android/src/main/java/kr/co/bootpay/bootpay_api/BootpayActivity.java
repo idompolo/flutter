@@ -73,7 +73,7 @@ public class BootpayActivity extends Activity {
             String params = object.getString("params");
             String account_expire_at = object.getString("account_expire_at");
             Boolean show_agree_window = object.getBoolean("show_agree_window");
-            String boot_key = object.getString("boot_key");
+//            String boot_key = object.getString("boot_key");
             String ux = object.getString("ux");
             Boolean sms_use = object.getBoolean("sms_use");
             String easy_pay_user_token = object.getString("easy_pay_user_token");
@@ -96,7 +96,7 @@ public class BootpayActivity extends Activity {
             if(isExist(params)) payload.setParams(params);
             if(isExist(account_expire_at)) payload.setAccount_expire_at(account_expire_at);
             payload.setShow_agree_window(show_agree_window);
-            if(isExist(boot_key)) payload.setBoot_key(boot_key);
+//            if(isExist(boot_key)) payload.setBoot_key(boot_key);
             if(isExist(ux)) payload.setUx(ux);
             payload.setSms_use(sms_use);
             if(isExist(easy_pay_user_token)) payload.setEasyPayUserToken(easy_pay_user_token);

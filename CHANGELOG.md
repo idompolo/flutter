@@ -1,3 +1,7 @@
+## 1.1.13
+* book_key jsonParsing에서 제외  
+
+
 ## 1.1.12
 * application_id가 비어있는 버그는 gson 버그로 추측중, 해당 로직을 변경  
 
