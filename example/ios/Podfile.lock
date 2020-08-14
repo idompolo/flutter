@@ -2,11 +2,11 @@ PODS:
   - Alamofire (5.1.0)
   - bootpay_api (0.0.1):
     - Flutter
-    - SwiftyBootpay (= 3.2.46)
+    - SwiftyBootpay (= 3.2.7)
   - CryptoSwift (1.3.1)
   - Flutter (1.0.0)
-  - ObjectMapper (4.1.0)
-  - SwiftyBootpay (3.2.46):
+  - ObjectMapper (4.2.0)
+  - SwiftyBootpay (3.2.7):
     - Alamofire (~> 5.1.0)
     - CryptoSwift
     - ObjectMapper
@@ -30,11 +30,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
-  bootpay_api: d236cc50d70fa05dc4fc3f60c01cd6a4c0e8a357
+  bootpay_api: 085f82b71ba548561bed34b964e3ac941f16de68
   CryptoSwift: f12f037f6d0fcd6d48c96db0071b653de64e6c4d
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  ObjectMapper: 822c1d073f5eeeeca3568698a7a6c0e59f7135c4
-  SwiftyBootpay: 31e1dbb582cf56993850a1d5b3f2d2961dd92d39
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  SwiftyBootpay: bdff090c136e72aff03613a93d954ff51b192aad
 
 PODFILE CHECKSUM: 73d69d282a87aa0aafabdecb47f632fc347a9aac
 
