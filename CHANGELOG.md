@@ -1,3 +1,6 @@
+## 1.1.14
+* android, ios bootpay native library version update to 3.4.7  
+
 ## 1.1.13
 * book_key jsonParsing에서 제외  
 

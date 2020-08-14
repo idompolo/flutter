@@ -59,7 +59,7 @@ class TestPageState extends State<TestPage> {
     payload.androidApplicationId = '5b8f6a4d396fa665fdc2b5e8';
     payload.iosApplicationId = '5b8f6a4d396fa665fdc2b5e9';
 
-    payload.pg = 'danal';
+    payload.pg = 'nicepay';
 //    payload.method = 'card';
     payload.methods = ['card', 'phone', 'vbank', 'bank'];
     payload.name = 'testUser';
