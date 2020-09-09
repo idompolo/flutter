@@ -11,6 +11,7 @@ class Extra {
   String locale = 'ko';
 
   int popup = 0;
+  int quick_popup = 0;
   String dispCashResult = 'Y';
   int escrow = 0;
   bool iosCloseButton = true;
@@ -30,6 +31,7 @@ class Extra {
     locale = json["locale"];
 
     popup = json["popup"];
+    quick_popup = json["quick_popup"];
     dispCashResult = json["disp_cash_result"];
     escrow = json["escrow"];
     iosCloseButton = json["iosCloseButton"];
@@ -42,9 +44,11 @@ class Extra {
         "vbank_result": this.vbankResult,
         "quotas": this.quotas,
         "app_scheme": this.appScheme,
+
         "app_scheme_host": this.appSchemeHost,
         "locale": this.locale,
         "popup": this.popup,
+        "quick_popup": this.quick_popup,
         "disp_cash_result": this.dispCashResult,
         "escrow": this.escrow,
         "iosCloseButton": this.iosCloseButton,
@@ -63,7 +67,7 @@ class Extra {
   String toString() {
     return "{start_at: '${reVal(startAt)}', end_at: '${reVal(endAt)}', expire_month: ${reVal(expireMonth)}, vbank_result: ${reVal(vbankResult)}," +
         "quotas: '${getQuotas()}', app_scheme: '${reVal(appScheme)}', app_scheme_host: '${reVal(appSchemeHost)}', locale: '${reVal(locale)}'," +
-        "popup: ${reVal(popup)}, disp_cash_result: '${reVal(dispCashResult)}', escrow: ${reVal(escrow)}, iosCloseButton: $iosCloseButton}";
+        "popup: ${reVal(popup)}, quick_popup: ${reVal(quick_popup)}, disp_cash_result: '${reVal(dispCashResult)}', escrow: ${reVal(escrow)}, iosCloseButton: $iosCloseButton}";
   }
 
   String reVal(dynamic value) {
