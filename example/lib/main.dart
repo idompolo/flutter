@@ -65,12 +65,12 @@ class TestPageState extends State<TestPage> {
     payload.name = 'testUser';
     payload.price = 2000.0;
     payload.orderId = DateTime.now().millisecondsSinceEpoch.toString();
-//    payload.params = {
-//      "callbackParam1" : "value12",
-//      "callbackParam2" : "value34",
-//      "callbackParam3" : "value56",
-//      "callbackParam4" : "value78",
-//    };
+    payload.params = {
+      "callbackParam1" : "value12",
+      "callbackParam2" : "value34",
+      "callbackParam3" : "value56",
+      "callbackParam4" : "value78",
+    };
 
     User user = User();
     user.username = "사용자 이름";
@@ -78,6 +78,7 @@ class TestPageState extends State<TestPage> {
     user.area = "서울";
     user.phone = "010-1234-4567";
     user.addr = '서울시 동작구 상도로 222';
+
 
     Extra extra = Extra();
     extra.appScheme = 'bootpayFlutterSample';
@@ -106,6 +107,7 @@ class TestPageState extends State<TestPage> {
         print('--- onDone: $json');
       },
       onReady: (String json) {
+        //flutter는 가상계좌가 발급되었을때  onReady가 호출되지 않는다. onDone에서 처리해주어야 한다.
         print('--- onReady: $json');
       },
       onCancel: (String json) {

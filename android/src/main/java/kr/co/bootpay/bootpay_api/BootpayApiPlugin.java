@@ -54,6 +54,7 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
   private void goBootpayActivity(Map<String, Object> params) {
     final Intent intent = new Intent(this.activity, BootpayActivity.class);
     if(params.get("payload") != null) intent.putExtra("payload", new Gson().toJson(params.get("payload")));
+    if(params.get("params") != null) intent.putExtra("params", new Gson().toJson(params.get("params")));
     if(params.get("user") != null) intent.putExtra("user", new Gson().toJson(params.get("user")));
     if(params.get("items") != null) intent.putExtra("items", new Gson().toJson(params.get("items")));
     if(params.get("extra") != null) intent.putExtra("extra", new Gson().toJson(params.get("extra")));
@@ -79,6 +80,8 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
       HashMap<Object, Object> params = new HashMap<>();
       String method = "";
       String message = "";
+
+//      Log.d("bootpay result", method + " : " + message);
 
       if(intent.hasExtra("method")) {
         method = intent.getStringExtra("method");

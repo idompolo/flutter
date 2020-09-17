@@ -40,11 +40,13 @@ class BootpayApi {
 
     Map<String, dynamic> params = {
       "payload": payload.toJson(),
+      "params": payload.params ?? {},
       "user": user.toJson(),
       "items": items.map((v) => v.toJson()).toList(),
       "extra": extra.toJson()
     };
 
+    print(params);
 
     Map<dynamic, dynamic> result = await _channel.invokeMethod(
       "bootpayRequest",

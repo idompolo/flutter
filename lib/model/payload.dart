@@ -76,8 +76,7 @@ class Payload {
         "tax_free": this.taxFree,
         "order_id": this.orderId,
         "use_order_id": this.useOrderId,
-        "params":
-            Platform.isAndroid == true ? this.params.toString() : this.params,
+        "params": Platform.isAndroid == true ? "" : this.params,
         "account_expire_at": this.accountExpireAt,
         "show_agree_window": this.showAgreeWindow,
         "ux": this.ux,

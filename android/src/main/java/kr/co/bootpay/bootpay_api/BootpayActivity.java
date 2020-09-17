@@ -29,6 +29,8 @@ import kr.co.bootpay.model.BootUser;
 import kr.co.bootpay.model.BootpayOneStore;
 import kr.co.bootpay.model.Item;
 import kr.co.bootpay.model.Payload;
+import java.util.HashMap;
+import android.util.Log;
 
 public class BootpayActivity extends Activity {
 
@@ -37,6 +39,8 @@ public class BootpayActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         String payloadString = this.getIntent().getStringExtra("payload");
+        String params = this.getIntent().getStringExtra("params");
+
         String userString = this.getIntent().getStringExtra("user");
         String itemsString = this.getIntent().getStringExtra("items");
         String extraString = this.getIntent().getStringExtra("extra");
@@ -47,7 +51,7 @@ public class BootpayActivity extends Activity {
         BootExtra bootExtra = new BootExtra();
 
 
-        Payload payload = getPayload(payloadString);
+        Payload payload = getPayload(payloadString, params);
         if(userString != null && !userString.isEmpty()) bootUser =  getBootUser(userString);
         if(itemsString != null && !itemsString.isEmpty()) items =  getItemList(itemsString);
         if(extraString != null && !extraString.isEmpty()) bootExtra =  getBootExtra(extraString);
@@ -56,53 +60,62 @@ public class BootpayActivity extends Activity {
     }
 
     //원인을 알 수 없는 gson 버그로 인해 json parser로 수정
-    Payload getPayload(String json) {
+    Payload getPayload(String json, String params) {
+
+
         Payload payload = new Payload();
         try {
-            JSONObject object = new JSONObject(json);
-
-            String application_id = object.getString("application_id");
-            String pg = object.getString("pg");
-            String method = object.getString("method");
-            JSONArray methods = object.getJSONArray("methods");
-            String name = object.getString("name");
-            Double price = object.getDouble("price");
-            Double tax_free = object.getDouble("tax_free");
-            String order_id = object.getString("order_id");
-            Boolean use_order_id = object.getBoolean("use_order_id");
-            String params = object.getString("params");
-            String account_expire_at = object.getString("account_expire_at");
-            Boolean show_agree_window = object.getBoolean("show_agree_window");
-//            String boot_key = object.getString("boot_key");
-            String ux = object.getString("ux");
-            Boolean sms_use = object.getBoolean("sms_use");
-            String easy_pay_user_token = object.getString("easy_pay_user_token");
-
-            if(isExist(application_id)) payload.setApplication_id(application_id);
-            if(isExist(pg)) payload.setPg(pg);
-            if(isExist(method)) payload.setMethod(method);
-            if(methods != null && methods.length() > 0) {
-                List<String> methodList = new ArrayList<>();
-                for(int i = 0; i < methods.length(); i++) {
-                    methodList.add(methods.getString(i));
-                }
-                payload.setMethods(methodList);
-            }
-            if(isExist(name)) payload.setName(name);
-            payload.setPrice(price);
-            payload.setTax_free(tax_free);
-            if(isExist(order_id)) payload.setOrder_id(order_id);
-            payload.setUse_order_id(use_order_id);
-            if(isExist(params)) payload.setParams(params);
-            if(isExist(account_expire_at)) payload.setAccount_expire_at(account_expire_at);
-            payload.setShow_agree_window(show_agree_window);
-//            if(isExist(boot_key)) payload.setBoot_key(boot_key);
-            if(isExist(ux)) payload.setUx(ux);
-            payload.setSms_use(sms_use);
-            if(isExist(easy_pay_user_token)) payload.setEasyPayUserToken(easy_pay_user_token);
-        } catch (JSONException e) {
-            e.printStackTrace();
             payload = new Gson().fromJson(json, Payload.class);
+            payload.setParams(params);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                JSONObject object = new JSONObject(json);
+
+                String application_id = object.getString("application_id");
+                String pg = object.getString("pg");
+                String method = object.getString("method");
+                JSONArray methods = object.getJSONArray("methods");
+                String name = object.getString("name");
+                Double price = object.getDouble("price");
+                Double tax_free = object.getDouble("tax_free");
+                String order_id = object.getString("order_id");
+                Boolean use_order_id = object.getBoolean("use_order_id");
+
+                String account_expire_at = object.getString("account_expire_at");
+                Boolean show_agree_window = object.getBoolean("show_agree_window");
+//            String boot_key = object.getString("boot_key");
+                String ux = object.getString("ux");
+                Boolean sms_use = object.getBoolean("sms_use");
+                String easy_pay_user_token = object.getString("easy_pay_user_token");
+
+
+                if(isExist(application_id)) payload.setApplication_id(application_id);
+                if(isExist(pg)) payload.setPg(pg);
+                if(isExist(method)) payload.setMethod(method);
+                if(methods != null && methods.length() > 0) {
+                    List<String> methodList = new ArrayList<>();
+                    for(int i = 0; i < methods.length(); i++) {
+                        methodList.add(methods.getString(i));
+                    }
+                    payload.setMethods(methodList);
+                }
+                if(isExist(name)) payload.setName(name);
+                payload.setPrice(price);
+                payload.setTax_free(tax_free);
+                if(isExist(order_id)) payload.setOrder_id(order_id);
+                payload.setUse_order_id(use_order_id);
+                if(isExist(params)) payload.setParams(params);
+                if(isExist(account_expire_at)) payload.setAccount_expire_at(account_expire_at);
+                payload.setShow_agree_window(show_agree_window);
+//            if(isExist(boot_key)) payload.setBoot_key(boot_key);
+                if(isExist(ux)) payload.setUx(ux);
+                payload.setSms_use(sms_use);
+                if(isExist(easy_pay_user_token)) payload.setEasyPayUserToken(easy_pay_user_token);
+            } catch (JSONException v) {
+                v.printStackTrace();
+            }
         }
         return payload;
     }
@@ -235,6 +248,8 @@ public class BootpayActivity extends Activity {
 
     void goBootpayRequest(Payload payload, BootUser user, BootExtra extra, List<Item> items) {
 
+//        Log.d("payload", payload.getParams());
+
         Bootpay.init(this)
             .setContext(this)
             .setApplicationId(payload.getApplication_id()) // 해당 프로젝트(안드로이드)의 application id 값
@@ -244,6 +259,7 @@ public class BootpayActivity extends Activity {
             .setMethods(payload.getMethods())
             .setBootUser(user)
             .setUX(UX.PG_DIALOG)
+            .setParams(payload.getParams())
             //.isShowAgree(true)
             .setName(payload.getName()) // 결제할 상품명
             .setOrderId(payload.getOrder_id()) // 결제 고유번호

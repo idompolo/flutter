@@ -1,3 +1,6 @@
+## 1.2.0
+* android params가 null 나오는 버그가 해결되었으며, 데이터 언마샬링시 gson으로 파싱하도록 처리되었습니다. 
+
 ## 1.1.14
 * android, ios bootpay native library version update to 3.4.7  
 
