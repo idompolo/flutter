@@ -1,4 +1,7 @@
-## 1.2.01
+## 1.2.11
+* runtime exception 처리 
+
+## 1.2.1
 * bootpay 메인 sdk가 3.3.1버전으로 업데이트 되었습니다.
 * runtime exception 처리 
 
