@@ -1,6 +1,6 @@
 package kr.co.bootpay.bootpay_api;
 
-import android.app.Activity;
+import io.flutter.embedding.android.FlutterActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -32,26 +32,38 @@ import kr.co.bootpay.model.Payload;
 import java.util.HashMap;
 import android.util.Log;
 
-public class BootpayActivity extends Activity {
+public class BootpayActivity extends FlutterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String payloadString = this.getIntent().getStringExtra("payload");
-        String params = this.getIntent().getStringExtra("params");
+        Bundle extras = this.getIntent().getExtras();
+        if(extras == null) return;
+        String application_id = "";
+        String payloadString = "";
 
-        String userString = this.getIntent().getStringExtra("user");
-        String itemsString = this.getIntent().getStringExtra("items");
-        String extraString = this.getIntent().getStringExtra("extra");
 
-//        Payload payload = new Payload();
+        if(extras.containsKey("application_id")) { application_id = this.getIntent().getStringExtra("application_id"); }
+        if(extras.containsKey("payload")) { payloadString = this.getIntent().getStringExtra("payload"); }
+
+        String params = "";
+        if(extras.containsKey("params")) { params = this.getIntent().getStringExtra("params"); }
+
+        String userString = "";
+        if(extras.containsKey("user")) { userString = this.getIntent().getStringExtra("user"); }
+
+        String itemsString = "";
+        if(extras.containsKey("items")) { itemsString = this.getIntent().getStringExtra("items"); }
+
+        String extraString = "";
+        if(extras.containsKey("extra")) { extraString = this.getIntent().getStringExtra("extra"); }
+
         BootUser bootUser = new BootUser();
         List<Item> items = new ArrayList<>();
         BootExtra bootExtra = new BootExtra();
 
-
-        Payload payload = getPayload(payloadString, params);
+        Payload payload = getPayload(payloadString, params, application_id);
         if(userString != null && !userString.isEmpty()) bootUser =  getBootUser(userString);
         if(itemsString != null && !itemsString.isEmpty()) items =  getItemList(itemsString);
         if(extraString != null && !extraString.isEmpty()) bootExtra =  getBootExtra(extraString);
@@ -60,13 +72,16 @@ public class BootpayActivity extends Activity {
     }
 
     //원인을 알 수 없는 gson 버그로 인해 json parser로 수정
-    Payload getPayload(String json, String params) {
+    Payload getPayload(String json, String params, String app_id) {
 
 
         Payload payload = new Payload();
         try {
             payload = new Gson().fromJson(json, Payload.class);
             payload.setParams(params);
+            if(payload.getApplication_id() == null || "".equals(payload.getApplication_id()))
+                payload.setApplication_id(app_id);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,31 +199,44 @@ public class BootpayActivity extends Activity {
         try {
             JSONObject object = new JSONObject(json);
 
-            String start_at = object.getString("start_at");
-            String end_at = object.getString("end_at");
-            Integer expire_month = object.getInt("expire_month");
-            boolean vbank_result = object.getBoolean("vbank_result");
-            JSONArray quotas = object.getJSONArray("quotas");
+            String start_at = "";
+            String end_at = "";
+            Integer expire_month = 0;
+            boolean vbank_result = false;
+            JSONArray quotas = new JSONArray();
 
-            String app_scheme = object.getString("app_scheme");
-            String app_scheme_host = object.getString("app_scheme_host");
-            String ux = object.getString("ux");
-            String disp_cash_result = object.getString("disp_cash_result");
-            int escrow = object.getInt("escrow");
+            String app_scheme = "";
+            String app_scheme_host = "";
+            String disp_cash_result = "";
+            int escrow = 0;
 
-//            if(isExist(start_at))
+            if(!object.isNull("start_at")) { start_at = object.getString("start_at"); }
+            if(!object.isNull("end_at")) { end_at = object.getString("end_at"); }
 
-            JSONObject jsonOneStore = object.getJSONObject("onestore");
-            if(jsonOneStore != null) {
-                String ad_id = jsonOneStore.getString("ad_id");
-                String sim_operator = jsonOneStore.getString("sim_operator");
-                String installer_package_name = jsonOneStore.getString("installer_package_name");
+            if(!object.isNull("expire_month")) { expire_month = object.getInt("expire_month"); }
+            if(!object.isNull("vbank_result")) { vbank_result = object.getBoolean("vbank_result"); }
+            if(!object.isNull("quotas")) { quotas = object.getJSONArray("quotas"); }
 
-                if(isExist(ad_id)) oneStore.ad_id = ad_id;
-                if(isExist(sim_operator)) oneStore.sim_operator = sim_operator;
-                if(isExist(installer_package_name)) oneStore.installer_package_name = installer_package_name;
-                bootExtra.setOnestore(oneStore);
+            if(!object.isNull("app_scheme")) { app_scheme = object.getString("app_scheme"); }
+            if(!object.isNull("app_scheme_host")) { app_scheme_host = object.getString("app_scheme_host"); }
+            if(!object.isNull("disp_cash_result")) { disp_cash_result = object.getString("disp_cash_result"); }
+
+            if(!object.isNull("escrow")) { escrow = object.getInt("escrow"); }
+
+            if(!object.isNull("onestore")) {
+                JSONObject jsonOneStore = object.getJSONObject("onestore");
+                if(jsonOneStore != null) {
+                    String ad_id = jsonOneStore.getString("ad_id");
+                    String sim_operator = jsonOneStore.getString("sim_operator");
+                    String installer_package_name = jsonOneStore.getString("installer_package_name");
+
+                    if(isExist(ad_id)) oneStore.ad_id = ad_id;
+                    if(isExist(sim_operator)) oneStore.sim_operator = sim_operator;
+                    if(isExist(installer_package_name)) oneStore.installer_package_name = installer_package_name;
+                    bootExtra.setOnestore(oneStore);
+                }
             }
+
 
             if(isExist(start_at)) bootExtra.setStartAt(start_at);
             if(isExist(end_at)) bootExtra.setEndAt(end_at);
@@ -223,7 +251,7 @@ public class BootpayActivity extends Activity {
             }
             if(isExist(app_scheme)) bootExtra.setApp_scheme(app_scheme);
             if(isExist(app_scheme_host)) bootExtra.setApp_scheme_host(app_scheme_host);
-            if(isExist(ux)) bootExtra.setUx(ux);
+//            if(isExist(ux)) bootExtra.setUx(ux);
             if(isExist(disp_cash_result)) bootExtra.setDisp_cash_result(disp_cash_result);
             bootExtra.setEscrow(escrow);
         } catch (JSONException e) {
