@@ -46,7 +46,6 @@ class BootpayApi {
       "extra": extra.toJson()
     };
 
-    print(params);
 
     Map<dynamic, dynamic> result = await _channel.invokeMethod(
       "bootpayRequest",
