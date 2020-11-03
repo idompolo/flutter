@@ -40,11 +40,9 @@ public class BootpayActivity extends FlutterActivity {
 
         Bundle extras = this.getIntent().getExtras();
         if(extras == null) return;
-        String application_id = "";
         String payloadString = "";
 
 
-        if(extras.containsKey("application_id")) { application_id = this.getIntent().getStringExtra("application_id"); }
         if(extras.containsKey("payload")) { payloadString = this.getIntent().getStringExtra("payload"); }
 
         String params = "";
@@ -63,7 +61,7 @@ public class BootpayActivity extends FlutterActivity {
         List<Item> items = new ArrayList<>();
         BootExtra bootExtra = new BootExtra();
 
-        Payload payload = getPayload(payloadString, params, application_id);
+        Payload payload = getPayload(payloadString, params);
         if(userString != null && !userString.isEmpty()) bootUser =  getBootUser(userString);
         if(itemsString != null && !itemsString.isEmpty()) items =  getItemList(itemsString);
         if(extraString != null && !extraString.isEmpty()) bootExtra =  getBootExtra(extraString);
@@ -72,65 +70,70 @@ public class BootpayActivity extends FlutterActivity {
     }
 
     //원인을 알 수 없는 gson 버그로 인해 json parser로 수정
-    Payload getPayload(String json, String params, String app_id) {
+    Payload getPayload(String json, String params) {
 
 
         Payload payload = new Payload();
         try {
-            payload = new Gson().fromJson(json, Payload.class);
-            payload.setParams(params);
-            if(payload.getApplication_id() == null || "".equals(payload.getApplication_id()))
-                payload.setApplication_id(app_id);
+            JSONObject object = new JSONObject(json);
 
+            String application_id = "";
+            String pg = "";
+            String method = "";
+            JSONArray methods = new JSONArray();
+            String name = "";
+            Double price = 0.0;
+            Double tax_free = 0.0;
+            String order_id = "";
+            Boolean use_order_id = false;
+
+            String account_expire_at = "";
+            Boolean show_agree_window = false;
+            String easy_pay_user_token = "";
+
+            if(!object.isNull("application_id")) { application_id = object.getString("application_id"); }
+            if(!object.isNull("pg")) { pg = object.getString("pg"); }
+            if(!object.isNull("method")) { method = object.getString("method"); }
+            if(!object.isNull("methods")) { methods = object.getJSONArray("methods"); }
+            if(!object.isNull("name")) { name = object.getString("name"); }
+
+            if(!object.isNull("price")) { price = object.getDouble("price"); }
+            if(!object.isNull("tax_free")) { tax_free = object.getDouble("tax_free"); }
+            if(!object.isNull("order_id")) { order_id = object.getString("order_id"); }
+            if(!object.isNull("use_order_id")) { use_order_id = object.getBoolean("use_order_id"); }
+
+            if(!object.isNull("account_expire_at")) { account_expire_at = object.getString("account_expire_at"); }
+            if(!object.isNull("show_agree_window")) { show_agree_window = object.getBoolean("show_agree_window"); }
+            if(!object.isNull("easy_pay_user_token")) { easy_pay_user_token = object.getString("easy_pay_user_token"); }
+
+            payload.setApplication_id(application_id);
+            payload.setPg(pg);
+            payload.setMethod(method);
+            if(methods != null && methods.length() > 0) {
+                List<String> methodList = new ArrayList<>();
+                for(int i = 0; i < methods.length(); i++) {
+                    methodList.add(methods.getString(i));
+                }
+                payload.setMethods(methodList);
+            }
+            payload.setName(name);
+            payload.setPrice(price);
+            payload.setTax_free(tax_free);
+            payload.setOrder_id(order_id);
+            payload.setUse_order_id(use_order_id);
+            payload.setParams(params);
+            payload.setAccount_expire_at(account_expire_at);
+            payload.setShow_agree_window(show_agree_window);
+//            if(isExist(boot_key)) payload.setBoot_key(boot_key);
+//            if(isExist(ux)) payload.setUx(ux);
+//            payload.setSms_use(sms_use);
+            payload.setEasyPayUserToken(easy_pay_user_token);
 
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                JSONObject object = new JSONObject(json);
 
-                String application_id = object.getString("application_id");
-                String pg = object.getString("pg");
-                String method = object.getString("method");
-                JSONArray methods = object.getJSONArray("methods");
-                String name = object.getString("name");
-                Double price = object.getDouble("price");
-                Double tax_free = object.getDouble("tax_free");
-                String order_id = object.getString("order_id");
-                Boolean use_order_id = object.getBoolean("use_order_id");
-
-                String account_expire_at = object.getString("account_expire_at");
-                Boolean show_agree_window = object.getBoolean("show_agree_window");
-//            String boot_key = object.getString("boot_key");
-                String ux = object.getString("ux");
-                Boolean sms_use = object.getBoolean("sms_use");
-                String easy_pay_user_token = object.getString("easy_pay_user_token");
-
-
-                if(isExist(application_id)) payload.setApplication_id(application_id);
-                if(isExist(pg)) payload.setPg(pg);
-                if(isExist(method)) payload.setMethod(method);
-                if(methods != null && methods.length() > 0) {
-                    List<String> methodList = new ArrayList<>();
-                    for(int i = 0; i < methods.length(); i++) {
-                        methodList.add(methods.getString(i));
-                    }
-                    payload.setMethods(methodList);
-                }
-                if(isExist(name)) payload.setName(name);
-                payload.setPrice(price);
-                payload.setTax_free(tax_free);
-                if(isExist(order_id)) payload.setOrder_id(order_id);
-                payload.setUse_order_id(use_order_id);
-                if(isExist(params)) payload.setParams(params);
-                if(isExist(account_expire_at)) payload.setAccount_expire_at(account_expire_at);
-                payload.setShow_agree_window(show_agree_window);
-//            if(isExist(boot_key)) payload.setBoot_key(boot_key);
-                if(isExist(ux)) payload.setUx(ux);
-                payload.setSms_use(sms_use);
-                if(isExist(easy_pay_user_token)) payload.setEasyPayUserToken(easy_pay_user_token);
-            } catch (JSONException v) {
-                v.printStackTrace();
-            }
+            payload = new Gson().fromJson(json, Payload.class);
+            payload.setParams(params);
         }
         return payload;
     }
@@ -141,23 +144,32 @@ public class BootpayActivity extends FlutterActivity {
         try {
             JSONObject object = new JSONObject(json);
 
-            String id = object.getString("id");
-            String username = object.getString("username");
-            String birth = object.getString("birth");
-            String email = object.getString("email");
-            int gender = object.getInt("gender");
-            String area = object.getString("area");
-            String phone = object.getString("phone");
-            String addr = object.getString("addr");
+            String id = "";
+            String username = "";
+            String birth = "";
+            String email = "";
+            int gender = -1;
+            String area = "";
+            String phone = "";
+            String addr = "";
 
-            if(isExist(id)) bootUser.setID(id);
-            if(isExist(username)) bootUser.setUsername(username);
-            if(isExist(birth)) bootUser.setBirth(birth);
-            if(isExist(email)) bootUser.setEmail(email);
+            if(!object.isNull("id")) { id = object.getString("id"); }
+            if(!object.isNull("username")) { username = object.getString("username"); }
+            if(!object.isNull("birth")) { birth = object.getString("birth"); }
+            if(!object.isNull("email")) { email = object.getString("email"); }
+            if(!object.isNull("gender")) { gender = object.getInt("gender"); }
+            if(!object.isNull("area")) { area = object.getString("area"); }
+            if(!object.isNull("phone")) { phone = object.getString("phone"); }
+            if(!object.isNull("addr")) { addr = object.getString("addr"); }
+
+            bootUser.setID(id);
+            bootUser.setUsername(username);
+            bootUser.setBirth(birth);
+            bootUser.setEmail(email);
             bootUser.setGender(gender);
-            if(isExist(area)) bootUser.setArea(area);
-            if(isExist(phone)) bootUser.setPhone(phone);
-            if(isExist(addr)) bootUser.setAddr(addr);
+            bootUser.setArea(area);
+            bootUser.setPhone(phone);
+            bootUser.setAddr(addr);
         } catch (JSONException e) {
             e.printStackTrace();
             bootUser = new Gson().fromJson(json, BootUser.class);
@@ -173,13 +185,21 @@ public class BootpayActivity extends FlutterActivity {
             for(int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
 
-                String item_name = object.getString("item_name");
-                int qty = object.getInt("qty");
-                String unique = object.getString("unique");
-                Double price = object.getDouble("price");
-                String cat1 = object.getString("cat1");
-                String cat2 = object.getString("cat2");
-                String cat3 = object.getString("cat3");
+                String item_name = "";
+                int qty = 0;
+                String unique = "";
+                Double price = 0.0;
+                String cat1 = "";
+                String cat2 = "";
+                String cat3 = "";
+
+                if(!object.isNull("item_name")) { item_name = object.getString("item_name"); }
+                if(!object.isNull("qty")) { qty = object.getInt("qty"); }
+                if(!object.isNull("unique")) { unique = object.getString("unique"); }
+                if(!object.isNull("price")) { price = object.getDouble("price"); }
+                if(!object.isNull("cat1")) { cat1 = object.getString("cat1"); }
+                if(!object.isNull("cat2")) { cat2 = object.getString("cat2"); }
+                if(!object.isNull("cat3")) { cat3 = object.getString("cat3"); }
 
                 Item item = new Item(item_name, qty, unique, price, cat1, cat2, cat3);
                 itemList.add(item);
@@ -212,7 +232,6 @@ public class BootpayActivity extends FlutterActivity {
 
             if(!object.isNull("start_at")) { start_at = object.getString("start_at"); }
             if(!object.isNull("end_at")) { end_at = object.getString("end_at"); }
-
             if(!object.isNull("expire_month")) { expire_month = object.getInt("expire_month"); }
             if(!object.isNull("vbank_result")) { vbank_result = object.getBoolean("vbank_result"); }
             if(!object.isNull("quotas")) { quotas = object.getJSONArray("quotas"); }
@@ -220,26 +239,29 @@ public class BootpayActivity extends FlutterActivity {
             if(!object.isNull("app_scheme")) { app_scheme = object.getString("app_scheme"); }
             if(!object.isNull("app_scheme_host")) { app_scheme_host = object.getString("app_scheme_host"); }
             if(!object.isNull("disp_cash_result")) { disp_cash_result = object.getString("disp_cash_result"); }
-
             if(!object.isNull("escrow")) { escrow = object.getInt("escrow"); }
 
             if(!object.isNull("onestore")) {
                 JSONObject jsonOneStore = object.getJSONObject("onestore");
                 if(jsonOneStore != null) {
-                    String ad_id = jsonOneStore.getString("ad_id");
-                    String sim_operator = jsonOneStore.getString("sim_operator");
-                    String installer_package_name = jsonOneStore.getString("installer_package_name");
+                    String ad_id = "";
+                    String sim_operator = "";
+                    String installer_package_name = "";
 
-                    if(isExist(ad_id)) oneStore.ad_id = ad_id;
-                    if(isExist(sim_operator)) oneStore.sim_operator = sim_operator;
-                    if(isExist(installer_package_name)) oneStore.installer_package_name = installer_package_name;
+                    if(!object.isNull("ad_id")) { ad_id = object.getString("ad_id"); }
+                    if(!object.isNull("sim_operator")) { sim_operator = object.getString("sim_operator"); }
+                    if(!object.isNull("installer_package_name")) { installer_package_name = object.getString("installer_package_name"); }
+
+                    oneStore.ad_id = ad_id;
+                    oneStore.sim_operator = sim_operator;
+                    oneStore.installer_package_name = installer_package_name;
                     bootExtra.setOnestore(oneStore);
                 }
             }
 
 
-            if(isExist(start_at)) bootExtra.setStartAt(start_at);
-            if(isExist(end_at)) bootExtra.setEndAt(end_at);
+            bootExtra.setStartAt(start_at);
+            bootExtra.setEndAt(end_at);
             bootExtra.setExpireMonth(expire_month);
             bootExtra.setVbankResult(vbank_result);
             if(quotas != null && quotas.length() > 0) {
@@ -249,10 +271,10 @@ public class BootpayActivity extends FlutterActivity {
                 }
                 bootExtra.setQuotas(toArray(quotaList));
             }
-            if(isExist(app_scheme)) bootExtra.setApp_scheme(app_scheme);
-            if(isExist(app_scheme_host)) bootExtra.setApp_scheme_host(app_scheme_host);
+            bootExtra.setApp_scheme(app_scheme);
+            bootExtra.setApp_scheme_host(app_scheme_host);
 //            if(isExist(ux)) bootExtra.setUx(ux);
-            if(isExist(disp_cash_result)) bootExtra.setDisp_cash_result(disp_cash_result);
+            bootExtra.setDisp_cash_result(disp_cash_result);
             bootExtra.setEscrow(escrow);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -1,3 +1,6 @@
+## 1.2.2
+* application_id is not confired runtime error 해결됨 
+
 ## 1.2.11
 * runtime exception 처리 
 

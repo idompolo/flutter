@@ -86,7 +86,7 @@ class Payload {
 //  params: ${getParamsString()}, account_expire_at: '${account_expire_at}', show_agree_window: $show_agree_window, ux: '${ux}', sms_use: ${sms_use}, user_token: '${user_token}'";
 
   String toString() {
-    return "{application_id: '$applicationId', pg: '$pg', method: '$method', name: '$name', price: $price, tax_free: $taxFree, order_id: '$orderId', use_order_id: $useOrderId, params: ${getParamsString()}, account_expire_at: '$accountExpireAt', show_agree_window: $showAgreeWindow, ux: '$ux', sms_use: $smsUse, user_token: '$userToken'";
+    return "{application_id: '${getApplicationId()}', pg: '$pg', method: '$method', name: '$name', price: $price, tax_free: $taxFree, order_id: '$orderId', use_order_id: $useOrderId, params: ${getParamsString()}, account_expire_at: '$accountExpireAt', show_agree_window: $showAgreeWindow, ux: '$ux', sms_use: $smsUse, user_token: '$userToken'";
   }
 
   String getParamsString() {

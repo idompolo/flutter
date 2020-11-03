@@ -70,6 +70,7 @@ class TestPageState extends State<TestPage> {
     List<Item> itemList = [item1, item2];
 
     Payload payload = Payload();
+    payload.applicationId = '5b8f6a4d396fa665fdc2b5e8';
     payload.androidApplicationId = '5b8f6a4d396fa665fdc2b5e8';
     payload.iosApplicationId = '5b8f6a4d396fa665fdc2b5e9';
 
