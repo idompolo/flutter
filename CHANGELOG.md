@@ -1,3 +1,6 @@
+## 1.2.21
+* version update 
+
 ## 1.2.2
 * application_id is not confired runtime error 해결됨 
 
