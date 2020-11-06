@@ -1,25 +1,56 @@
 PODS:
-  - Alamofire (5.1.0)
+  - Alamofire (5.2.2)
   - bootpay_api (0.0.1):
     - Flutter
-    - SwiftyBootpay (= 3.3.12)
+    - SwiftyBootpay (= 3.3.531)
   - CryptoSwift (1.3.2)
   - Flutter (1.0.0)
+  - JGProgressHUD (2.2)
   - ObjectMapper (4.2.0)
-  - SwiftyBootpay (3.3.12):
-    - Alamofire (~> 5.1.0)
+  - path_provider_linux (0.0.1):
+    - Flutter
+  - path_provider_windows (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
+  - shared_preferences_linux (0.0.1):
+    - Flutter
+  - shared_preferences_macos (0.0.1):
+    - Flutter
+  - shared_preferences_web (0.0.1):
+    - Flutter
+  - shared_preferences_windows (0.0.1):
+    - Flutter
+  - SnapKit (5.0.1)
+  - SwiftOTP (2.0.2):
+    - CryptoSwift (>= 1.0.0)
+  - SwiftyBootpay (3.3.531):
+    - Alamofire (~> 5.2.2)
     - CryptoSwift
+    - JGProgressHUD
     - ObjectMapper
+    - SnapKit (~> 5.0.0)
+    - SwiftOTP
 
 DEPENDENCIES:
   - bootpay_api (from `.symlinks/plugins/bootpay_api/ios`)
   - Flutter (from `Flutter`)
+  - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
+  - path_provider_windows (from `.symlinks/plugins/path_provider_windows/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - shared_preferences_linux (from `.symlinks/plugins/shared_preferences_linux/ios`)
+  - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
+  - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
+  - shared_preferences_windows (from `.symlinks/plugins/shared_preferences_windows/ios`)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - CryptoSwift
+    - JGProgressHUD
     - ObjectMapper
+    - SnapKit
+    - SwiftOTP
     - SwiftyBootpay
 
 EXTERNAL SOURCES:
@@ -27,14 +58,38 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/bootpay_api/ios"
   Flutter:
     :path: Flutter
+  path_provider_linux:
+    :path: ".symlinks/plugins/path_provider_linux/ios"
+  path_provider_windows:
+    :path: ".symlinks/plugins/path_provider_windows/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+  shared_preferences_linux:
+    :path: ".symlinks/plugins/shared_preferences_linux/ios"
+  shared_preferences_macos:
+    :path: ".symlinks/plugins/shared_preferences_macos/ios"
+  shared_preferences_web:
+    :path: ".symlinks/plugins/shared_preferences_web/ios"
+  shared_preferences_windows:
+    :path: ".symlinks/plugins/shared_preferences_windows/ios"
 
 SPEC CHECKSUMS:
-  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
-  bootpay_api: caf3d6e091a6759358363a5c3dcdc7ac8a94d3f7
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  bootpay_api: 1a25b7e2ae3c21358310640138b2cd3134875275
   CryptoSwift: 093499be1a94b0cae36e6c26b70870668cb56060
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
-  SwiftyBootpay: 48239aedc8210f37d01a916e6493ab7cc3c489a0
+  path_provider_linux: 4d630dc393e1f20364f3e3b4a2ff41d9674a84e4
+  path_provider_windows: a2b81600c677ac1959367280991971cb9a1edb3b
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  shared_preferences_linux: afefbfe8d921e207f01ede8b60373d9e3b566b78
+  shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
+  shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
+  shared_preferences_windows: 36b76d6f54e76ead957e60b49e2f124b4cd3e6ae
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftOTP: 572fb5601add61e93534cf6644ef236d65b4aae8
+  SwiftyBootpay: d15680bdd75be7565fae6c0ec507bccca5962455
 
 PODFILE CHECKSUM: 73d69d282a87aa0aafabdecb47f632fc347a9aac
 
