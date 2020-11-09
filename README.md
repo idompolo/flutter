@@ -1,5 +1,5 @@
 # 카드 간편결제 (생체인식) 데모 
-![bootpay_bio](https://user-images.githubusercontent.com/1625573/98509341-5ae6fb00-22a4-11eb-81a3-1b8d9f6c11ed.gif)
+![bootpay_bio_400](https://user-images.githubusercontent.com/1625573/98510224-0d6b8d80-22a6-11eb-95c2-9285f3cc4e89.gif)
 
 
 ![payment window_1](https://docs.bootpay.co.kr/assets/online/onestore-145efaf06e9a3b1a93d07bbe174b2394f50373e9334a3205174676a181acf5b0.png)
