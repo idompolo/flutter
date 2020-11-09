@@ -46,6 +46,8 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if(call.method.equals("bootpayRequest")) {
       goBootpayActivity(call.<Map<String, Object>>arguments());
+    } else if(call.method.equals("bootpayRequestBio")) {
+      goBootpayBioActivity(call.<Map<String, Object>>arguments());
     } else {
       result.notImplemented();
     }
@@ -58,6 +60,17 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
     if(params.get("user") != null) intent.putExtra("user", new Gson().toJson(params.get("user")));
     if(params.get("items") != null) intent.putExtra("items", new Gson().toJson(params.get("items")));
     if(params.get("extra") != null) intent.putExtra("extra", new Gson().toJson(params.get("extra")));
+    this.activity.startActivityForResult(intent, BOOTPAY_REQUEST_CODE);
+  }
+
+  private void goBootpayBioActivity(Map<String, Object> params) {
+    final Intent intent = new Intent(this.activity, BootpayActivityBio.class);
+    if(params.get("payload") != null) intent.putExtra("payload", new Gson().toJson(params.get("payload")));
+    if(params.get("params") != null) intent.putExtra("params", new Gson().toJson(params.get("params")));
+    if(params.get("user") != null) intent.putExtra("user", new Gson().toJson(params.get("user")));
+    if(params.get("items") != null) intent.putExtra("items", new Gson().toJson(params.get("items")));
+    if(params.get("extra") != null) intent.putExtra("extra", new Gson().toJson(params.get("extra")));
+    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
     this.activity.startActivityForResult(intent, BOOTPAY_REQUEST_CODE);
   }
 
@@ -81,8 +94,6 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
       String method = "";
       String message = "";
 
-//      Log.d("bootpay result", method + " : " + message);
-
       if(intent.hasExtra("method")) {
         method = intent.getStringExtra("method");
         if(method != null && method.length() > 0) params.put("method", method);
@@ -92,6 +103,7 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
         message = intent.getStringExtra("message");
         if(message != null && message.length() > 0) params.put("message", message);
       }
+
 
       this.methodChannelResult.success(params);
     } catch (Exception e) {

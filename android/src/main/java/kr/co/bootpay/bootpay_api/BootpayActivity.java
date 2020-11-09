@@ -38,6 +38,7 @@ public class BootpayActivity extends FlutterActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         Bundle extras = this.getIntent().getExtras();
         if(extras == null) return;
         String payloadString = "";
@@ -120,7 +121,7 @@ public class BootpayActivity extends FlutterActivity {
             payload.setPrice(price);
             payload.setTax_free(tax_free);
             payload.setOrder_id(order_id);
-            payload.setUse_order_id(use_order_id);
+            payload.setUse_order_id(use_order_id == true ? 1 : 0);
             payload.setParams(params);
             payload.setAccount_expire_at(account_expire_at);
             payload.setShow_agree_window(show_agree_window);

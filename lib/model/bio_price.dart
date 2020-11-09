@@ -1,10 +1,10 @@
-import 'dart:io';
 
-import 'package:bootpay_api/model/payload.dart';
+class BioPrice {
+  String name;
+  double price = 0.0;
 
-class BioPayload extends Payload {
-
-  List<String> names;
-  List<BioPrice> prices;
-
+  Map<String, dynamic> toJson() => {
+    "name": this.name,
+    "price": this.price
+  };
 }
