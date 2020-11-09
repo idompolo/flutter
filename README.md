@@ -1,3 +1,5 @@
+![bootpay_bio](https://user-images.githubusercontent.com/1625573/98509341-5ae6fb00-22a4-11eb-81a3-1b8d9f6c11ed.gif)
+
 ![payment window_1](https://docs.bootpay.co.kr/assets/online/onestore-145efaf06e9a3b1a93d07bbe174b2394f50373e9334a3205174676a181acf5b0.png)
 
 # bootpay_api
