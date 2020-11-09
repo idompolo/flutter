@@ -2,6 +2,7 @@
 ![bootpay_bio_400](https://user-images.githubusercontent.com/1625573/98510224-0d6b8d80-22a6-11eb-95c2-9285f3cc4e89.gif)
 
 
+# 카드 간편결제 (비밀번호) 스크린샷
 ![payment window_1](https://docs.bootpay.co.kr/assets/online/onestore-145efaf06e9a3b1a93d07bbe174b2394f50373e9334a3205174676a181acf5b0.png)
 
 # bootpay_api
