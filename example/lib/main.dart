@@ -198,7 +198,6 @@ class TestPageState extends State<TestPage> {
     extra.quotas = [0,2,3];
     extra.iosCloseButton = false;
 
-    print(0);
 
     BootpayApi.requestBio(
       context,
