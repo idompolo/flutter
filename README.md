@@ -45,7 +45,13 @@ No configuration required.
 ** {your project root}/ios/Runner/Info.plist **
 
 ```xml
-<key>NSAppTransportSecurity</key>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    ...
+
+    <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>
         <true/>
@@ -63,6 +69,12 @@ No configuration required.
             </array>
         </dict>
     </array>
+
+    ...
+    <key>NSFaceIDUsageDescription</key>
+    <string>생체인증 결제 진행시 권한이 필요합니다</string>
+</dict>
+</plist>
 ```
 
 Done!
