@@ -1,6 +1,6 @@
 class StatItem {
   String itemName = '';
-  int itemImg = 0;
+  String itemImg = '';
   String unique = '';
   String cat1 = '';
   String cat2 = '';
