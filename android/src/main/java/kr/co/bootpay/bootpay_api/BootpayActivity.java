@@ -335,7 +335,7 @@ public class BootpayActivity extends FlutterActivity {
             .onReady(new ReadyListener() { // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
                 @Override
                 public void onReady(String message) {
-                    setFinishData("onReady", message);
+                    setFinishData("onDone", message);
                 }
             })
             .onCancel(new CancelListener() { // 결제 취소시 호출

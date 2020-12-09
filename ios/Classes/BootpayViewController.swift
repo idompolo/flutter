@@ -38,6 +38,8 @@ class BootpayViewController: UIViewController {
                 items.append( BootpayItem(JSON: obj )!)
             }
         }
+        extra.vbank_result = true
+        
         
         Bootpay.request(self, sendable: self, payload: payload, user: user, items: items, extra: extra, smsPayload: nil, remoteForm: nil, remotePre: nil, addView: true)
     }

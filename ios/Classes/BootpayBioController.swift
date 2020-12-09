@@ -54,9 +54,8 @@ extension BootpayBioController: BootpayRequestProtocol {
     // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
     func onReady(data: [String: Any]) {
         var dump = data
-        dump["method"] = "onReady"
+        dump["method"] = "onDone"
         self.flutterResult?(dump)
-        Bootpay.dismiss()
     }
 
     // 결제가 진행되기 바로 직전 호출되는 함수로, 주로 재고처리 등의 로직이 수행

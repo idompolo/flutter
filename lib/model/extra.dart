@@ -2,7 +2,7 @@ class Extra {
   String startAt = '';
   String endAt = '';
   int expireMonth = 0;
-  bool vbankResult = false;
+  bool vbankResult = true;
   List<int> quotas;
 
   String appScheme = '';
