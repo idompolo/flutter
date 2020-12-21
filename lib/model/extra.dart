@@ -14,7 +14,7 @@ class Extra {
   int quick_popup = 0;
   String dispCashResult = 'Y';
   int escrow = 0;
-  bool iosCloseButton = true;
+  bool iosCloseButton = false;
 
   String offer_period = ''; //결제창 제공기간에 해당하는 string 값, 지원하는 PG만 적용됨
 

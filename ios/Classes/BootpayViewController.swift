@@ -14,10 +14,12 @@ class BootpayViewController: UIViewController {
 
     var params: Dictionary<String, Any> = [:]
     var flutterResult: FlutterResult?
+    var isModalButNoFullScreen = false
+//    var presentDelegate: UIAdaptivePresentationControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .white  
         goBootpayRequest()
     }
 
@@ -41,7 +43,7 @@ class BootpayViewController: UIViewController {
         extra.vbank_result = true
         
         
-        Bootpay.request(self, sendable: self, payload: payload, user: user, items: items, extra: extra, smsPayload: nil, remoteForm: nil, remotePre: nil, addView: true)
+        Bootpay.request(self, sendable: self, payload: payload, user: user, items: items, extra: extra, smsPayload: nil, remoteForm: nil, remotePre: nil, addView: true, isModalButNoFullScreen: true)
     }
 }
 
@@ -80,4 +82,3 @@ extension BootpayViewController: BootpayRequestProtocol {
         self.presentingViewController?.dismiss(animated: true)
     }
 }
-

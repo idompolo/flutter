@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import SwiftyBootpay
 
-public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin {
+public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin, UIAdaptivePresentationControllerDelegate {
     
  public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "bootpay_api", binaryMessenger: registrar.messenger())
@@ -30,7 +30,9 @@ public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin {
    let vc = BootpayViewController()
    vc.params = params;
    vc.flutterResult = result
-   vc.modalPresentationStyle = .fullScreen
+   vc.isModalButNoFullScreen = true
+   
+   vc.presentationController?.delegate = vc
    rootViewController?.present(vc, animated: true, completion: nil)
  }
     
@@ -58,6 +60,7 @@ public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin {
     let vc = BootpayBioController()
     vc.params = params;
     vc.flutterResult = result
+    vc.presentationController?.delegate = vc
     
     Bootpay.requestBio3rd(rootViewController!, authController: vc, sendable: vc, payload: payload, user: user, items: items, extra: extra)
  }
@@ -75,4 +78,29 @@ public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin {
  public func applicationDidBecomeActive(_ application: UIApplication) {
      Bootpay.sharedInstance.sessionActive(active: true)
  }
+
+
+
 }
+
+extension BootpayViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        let result = [
+            "method": "onCancel",
+            "message": "사용자에 의해 취소되었습니다."
+        ]
+        self.flutterResult?(result)
+    }
+}
+
+extension BootpayBioController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        let result = [
+            "method": "onCancel",
+            "message": "사용자에 의해 취소되었습니다."
+        ]
+        self.flutterResult?(result)
+    }
+}
+
+ 

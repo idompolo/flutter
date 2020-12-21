@@ -107,8 +107,6 @@ class BootpayApi {
       params,
     );
 
-    print(result);
-
     String method = result["method"];
     if (method == null) method = result["action"];
 
