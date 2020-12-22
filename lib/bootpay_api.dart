@@ -47,32 +47,35 @@ class BootpayApi {
       "extra": extra.toJson()
     };
 
+    try {
+      Map<dynamic, dynamic> result = await _channel.invokeMethod(
+        "bootpayRequest",
+        params,
+      );
 
-    Map<dynamic, dynamic> result = await _channel.invokeMethod(
-      "bootpayRequest",
-      params,
-    );
 
+      String method = result["method"];
+      if (method == null) method = result["action"];
 
-    String method = result["method"];
-    if (method == null) method = result["action"];
+      String message = result["message"];
+      if (message == null) message = result["msg"];
 
-    String message = result["message"];
-    if (message == null) message = result["msg"];
-
-    //confirm 생략
-    if (method == 'onDone' || method == 'BootpayDone') {
-      if (onDone != null) onDone(message);
-    } else if (method == 'onReady' || method == 'BootpayReady') {
-      if (onReady != null) onReady(message);
-    } else if (method == 'onCancel' || method == 'BootpayCancel') {
-      if (onCancel != null) onCancel(message);
-    } else if (method == 'onError' || method == 'BootpayError') {
-      if (onError != null) onError(message);
-    } else if (result['receipt_id'] != null && result['receipt_id'].isNotEmpty) {
-      if (onDone != null) onDone(jsonEncode(result));
-    } else if (method == 'onConfirm' || method == 'BootpayConfirm') {
-      if (onReady != null) onReady(message);
+      //confirm 생략
+      if (method == 'onDone' || method == 'BootpayDone') {
+        if (onDone != null) onDone(message);
+      } else if (method == 'onReady' || method == 'BootpayReady') {
+        if (onReady != null) onReady(message);
+      } else if (method == 'onCancel' || method == 'BootpayCancel') {
+        if (onCancel != null) onCancel(message);
+      } else if (method == 'onError' || method == 'BootpayError') {
+        if (onError != null) onError(message);
+      } else if (result['receipt_id'] != null && result['receipt_id'].isNotEmpty) {
+        if (onDone != null) onDone(jsonEncode(result));
+      } else if (method == 'onConfirm' || method == 'BootpayConfirm') {
+        if (onReady != null) onReady(message);
+      }
+    } on PlatformException catch (e) {
+      print("PlatformException occured!! code: ${e.code}, msg: ${e.message}");
     }
   }
 
