@@ -60,6 +60,8 @@ class BootpayApi {
       String message = result["message"];
       if (message == null) message = result["msg"];
 
+
+
       //confirm 생략
       if (method == 'onDone' || method == 'BootpayDone') {
         if (onDone != null) onDone(message);
@@ -118,7 +120,7 @@ class BootpayApi {
 
     //confirm 생략
     if (method == 'onDone' || method == 'BootpayDone') {
-      if (onDone != null) onDone(message);
+      if (onDone != null) onDone(jsonEncode(result["data"]));
     } else if (method == 'onReady' || method == 'BootpayReady') {
       if (onReady != null) onReady(message);
     } else if (method == 'onCancel' || method == 'BootpayCancel') {

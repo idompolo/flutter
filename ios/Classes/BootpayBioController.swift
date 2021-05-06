@@ -62,7 +62,7 @@ extension BootpayBioController: BootpayRequestProtocol {
     func onConfirm(data: [String: Any]) {
         var dump = data
         dump["method"] = "onConfirm"
-        self.flutterResult?(dump)
+//        self.flutterResult?(dump)
         Bootpay.transactionConfirm(data: data)
     }
 

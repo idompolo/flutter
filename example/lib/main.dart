@@ -94,8 +94,8 @@ class TestPageState extends State<TestPage> {
     payload.androidApplicationId = '5b8f6a4d396fa665fdc2b5e8';
     payload.iosApplicationId = '5b8f6a4d396fa665fdc2b5e9';
 
-    payload.pg = 'payletter';
-//    payload.method = 'card';
+    payload.pg = 'payapp';
+    payload.method = 'npay';
     // payload.methods = ['card', 'phone', 'vbank', 'bank'];
     payload.name = '테스트 상품';
     payload.price = 1000.0; //정기결제시 0 혹은 주석
@@ -118,7 +118,9 @@ class TestPageState extends State<TestPage> {
 
     Extra extra = Extra();
     extra.appScheme = 'bootpayFlutterSample';
-    extra.quotas = [0,2,3]; 
+    extra.quotas = [0,2,3];
+    extra.popup = 1;
+    extra.quick_popup = 1;
 
     BootpayApi.request(
       context,
@@ -159,7 +161,7 @@ class TestPageState extends State<TestPage> {
     payload.userToken = token;
 
     payload.pg = 'nicepay';
-    payload.methods = ['card', 'phone', 'vbank', 'bank'];
+    // payload.methods = ['card', 'phone', 'vbank', 'bank'];
     payload.name = '테스트 상품';
     payload.price = 1000.0; //정기결제시 0 혹은 주석
     payload.orderId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -206,9 +208,6 @@ class TestPageState extends State<TestPage> {
       extra: extra,
       user: user,
       items: itemList,
-      onConfirm: (String json) {
-        print('--- onDone: $json');
-      },
       onDone: (String json) {
         print('--- onDone: $json');
       },

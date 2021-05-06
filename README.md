@@ -10,7 +10,7 @@
 부트페이에서 관리하는 공식 플러터 플러그인입니다. 
 기존의 [bootpay_flutter](https://pub.dev/packages/bootpay_flutter) 모듈을 fork 하여 만들었습니다.
 부트페이 개발매뉴얼은 [이곳](https://docs.bootpay.co.kr) 을 참조해주세요.
-
+₩
 ### 지원하는 PG사 
 	1. 이니시스
 	2. 나이스페이

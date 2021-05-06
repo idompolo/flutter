@@ -1,3 +1,6 @@
+## 2.0.8
+* ios 생체인증 결제시 onDone으로 데이터 리턴 안되는 현상 수정     
+
 ## 2.0.7
 * android 특정 기기에서 invokedMethod 에러가 발생함. flutter버전 - 안드로이드에서 네이티브 콜이 지원이 안될거라고 예상중. try catch 를 추가함    
 

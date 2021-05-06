@@ -30,10 +30,12 @@ import kr.co.bootpay.model.BootpayOneStore;
 import kr.co.bootpay.model.Item;
 import kr.co.bootpay.model.Payload;
 import java.util.HashMap;
+
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 public class BootpayActivity extends FlutterActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
