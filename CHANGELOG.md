@@ -1,3 +1,6 @@
+## 3.0.0
+* null safety support, android & ios version update      
+
 ## 2.0.8
 * ios 생체인증 결제시 onDone으로 데이터 리턴 안되는 현상 수정     
 
