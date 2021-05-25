@@ -1,17 +1,15 @@
 PODS:
   - Alamofire (5.2.2)
-  - bootpay_api (2.0.6):
+  - bootpay_api (3.0.0):
     - Flutter
-    - SwiftyBootpay (= 3.4.107)
+    - SwiftyBootpay (= 3.4.2)
   - CryptoSwift (1.4.0)
   - Flutter (1.0.0)
   - JGProgressHUD (2.2)
   - ObjectMapper (4.2.0)
-  - shared_preferences (0.0.1):
-    - Flutter
   - SnapKit (5.0.1)
   - SwiftOTP (3.0.0)
-  - SwiftyBootpay (3.4.107):
+  - SwiftyBootpay (3.4.2):
     - Alamofire (~> 5.2.2)
     - CryptoSwift
     - JGProgressHUD
@@ -22,7 +20,6 @@ PODS:
 DEPENDENCIES:
   - bootpay_api (from `.symlinks/plugins/bootpay_api/ios`)
   - Flutter (from `Flutter`)
-  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 SPEC REPOS:
   trunk:
@@ -39,20 +36,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/bootpay_api/ios"
   Flutter:
     :path: Flutter
-  shared_preferences:
-    :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
-  bootpay_api: 123cb3ce250e418cdfbf4a2904055a5044df3b43
+  bootpay_api: f0d60433987f686fdddf086c85d1c842eb6ae6bc
   CryptoSwift: 7cc902df1784de3b389a387756c7d710f197730c
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
-  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftOTP: ec3848f12a4541f29d96f6a0fe63dcbb8448d96f
-  SwiftyBootpay: 1cf14c6230c17548a6cdc004f9feaa4c44158c50
+  SwiftyBootpay: 134039f53fede9e74fa507348be32285e7fc2824
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 

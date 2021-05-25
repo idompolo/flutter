@@ -8,7 +8,7 @@ import 'package:bootpay_api/model/bio_price.dart';
 import 'package:bootpay_api/model/extra.dart';
 import 'package:bootpay_api/model/user.dart';
 import 'package:bootpay_api/model/item.dart';
-import 'package:requests/requests.dart';
+import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 void main() => runApp(MyApp());
@@ -94,8 +94,8 @@ class TestPageState extends State<TestPage> {
     payload.androidApplicationId = '5b8f6a4d396fa665fdc2b5e8';
     payload.iosApplicationId = '5b8f6a4d396fa665fdc2b5e9';
 
-    payload.pg = 'payapp';
-    payload.method = 'npay';
+    payload.pg = 'kcp';
+    payload.method = 'card';
     // payload.methods = ['card', 'phone', 'vbank', 'bank'];
     payload.name = '테스트 상품';
     payload.price = 1000.0; //정기결제시 0 혹은 주석
@@ -128,13 +128,13 @@ class TestPageState extends State<TestPage> {
       extra: extra,
       user: user,
       items: itemList,
-      onDone: (String json) {
+      onDone: (json) {
         print('--- onDone: $json');
       },
-      onCancel: (String json) {
+      onCancel: (json) {
         print('--- onCancel: $json');
       },
-      onError: (String json) {
+      onError: (json) {
         print(' --- onError: $json');
       },
     );
@@ -208,13 +208,13 @@ class TestPageState extends State<TestPage> {
       extra: extra,
       user: user,
       items: itemList,
-      onDone: (String json) {
+      onDone: (json) {
         print('--- onDone: $json');
       },
-      onCancel: (String json) {
+      onCancel: (json) {
         print('--- onCancel: $json');
       },
-      onError: (String json) {
+      onError: (json) {
         print(' --- onError: $json');
       },
     );
@@ -234,13 +234,14 @@ class TestPageState extends State<TestPage> {
       "private_key": rest_pk
     };
 
-    final response = await Requests.post("https://api.bootpay.co.kr/request/token", body: params);
+    var url = Uri.parse('https://api.bootpay.co.kr/request/token');
+    final response = await http.post(url, body: params);
     if (response.statusCode == 200) {
-      var res = json.decode(response.content());
+      var res = json.decode(response.body);
       String token = res['data']['token'];
       getUserToken(token);
     } else {
-      print(response.content());
+      print(response.body);
     }
   }
 
@@ -257,7 +258,8 @@ class TestPageState extends State<TestPage> {
       "phone": "01012345678"
     };
 
-    final response = await Requests.post("https://api.bootpay.co.kr/request/user/token",
+    var url = Uri.parse('https://api.bootpay.co.kr/request/user/token');
+    final response = await http.post(url,
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded",
@@ -265,11 +267,11 @@ class TestPageState extends State<TestPage> {
         },
         body: body);
     if (response.statusCode == 200) {
-      var res = json.decode(response.content());
+      var res = json.decode(response.body);
       String token = res['data']['user_token'];
       goBootpayRequestBio(token);
     } else {
-      print(response.content());
+      print(response.body);
     }
   }
 }

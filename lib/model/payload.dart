@@ -1,36 +1,36 @@
 import 'dart:io';
 
 class Payload {
-  String androidApplicationId = '';
-  String iosApplicationId = '';
+  String? androidApplicationId = '';
+  String? iosApplicationId = '';
 
-  String applicationId = '';
+  String? applicationId = '';
 
 //  String rest_application_id; //해당 기능은 이해를 돕기위해 제공할 뿐, flutter에서 절대로 사용해서는 안됩니다
 
-  String pg = '';
-  String method = '';
-  List<String> methods;
-  String name = '';
+  String? pg = '';
+  String? method = '';
+  List<String>? methods;
+  String? name = '';
 
-  double price = 0;
-  double taxFree = 0;
+  double? price = 0;
+  double? taxFree = 0;
 
-  String orderId = '';
-  bool useOrderId = false;
+  String? orderId = '';
+  bool? useOrderId = false;
 
-  Map<String, dynamic> params;
+  Map<String, dynamic>? params;
 
-  String accountExpireAt = '';
-  bool showAgreeWindow = false;
+  String? accountExpireAt = '';
+  bool? showAgreeWindow = false;
 
-  String bootKey = '';
-  String ux = 'PG_DIALOG';
-  int smsUse = 0;
-  String userToken = '';
+  String? bootKey = '';
+  String? ux = 'PG_DIALOG';
+  int? smsUse = 0;
+  String? userToken = '';
 
   Payload() {
-    this.methods = new List();
+    this.methods = [];
     this.params = new Map();
   }
 
@@ -61,7 +61,7 @@ class Payload {
   }
 
   getApplicationId() {
-    if(this.applicationId != null && this.applicationId.isNotEmpty) return this.applicationId;
+    if(this.applicationId != null && this.applicationId!.isNotEmpty) return this.applicationId;
     if(Platform.isIOS) return this.iosApplicationId;
     else return this.androidApplicationId;
   }
@@ -106,9 +106,9 @@ class Payload {
   }
 
   String getMethods() {
-    if (methods == null || methods.isEmpty) return '';
+    if (methods == null || methods!.isEmpty) return '';
     String result = '';
-    for (String method in methods) {
+    for (String method in methods!) {
       if (result.length > 0) result += ',';
       result += method;
     }

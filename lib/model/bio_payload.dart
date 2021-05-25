@@ -4,8 +4,8 @@ import 'package:bootpay_api/model/payload.dart';
 import 'package:bootpay_api/model/bio_price.dart';
 
 class BioPayload extends Payload {
-  List<String> names;
-  List<BioPrice> prices;
+  List<String>? names;
+  late List<BioPrice> prices;
 
   Map<String, dynamic> toJson() => {
     "application_id": getApplicationId(),

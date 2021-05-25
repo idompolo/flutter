@@ -1,21 +1,21 @@
 class PayResultData {
-  String receiptId;
-  double price;
-  String cardNo;
-  String cardName;
-  String cardQuota;
-  Map<String, dynamic> params;
-  String itemName;
-  String orderId;
-  String url;
-  String paymentName;
-  String pgName;
-  String pg;
-  String method;
-  String methodName;
-  String requestedAt;
-  String purchasedAt;
-  int status;
+  String? receiptId;
+  double? price;
+  String? cardNo;
+  String? cardName;
+  String? cardQuota;
+  Map<String, dynamic>? params;
+  String? itemName;
+  String? orderId;
+  String? url;
+  String? paymentName;
+  String? pgName;
+  String? pg;
+  String? method;
+  String? methodName;
+  String? requestedAt;
+  String? purchasedAt;
+  int? status;
 
   PayResultData.fromJson(Map<String, dynamic> json) {
     receiptId = json["receipt_id"];

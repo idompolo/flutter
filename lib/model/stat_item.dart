@@ -1,10 +1,10 @@
 class StatItem {
-  String itemName = '';
-  String itemImg = '';
-  String unique = '';
-  String cat1 = '';
-  String cat2 = '';
-  String cat3 = '';
+  String? itemName = '';
+  String? itemImg = '';
+  String? unique = '';
+  String? cat1 = '';
+  String? cat2 = '';
+  String? cat3 = '';
 
   StatItem();
 

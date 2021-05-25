@@ -1,13 +1,13 @@
 class User {
-  String id = '';
-  String username = '';
-  String email = '';
-  int gender = 0;
+  String? id = '';
+  String? username = '';
+  String? email = '';
+  int? gender = 0;
 
-  String birth = '';
-  String phone = '';
-  String area = '';
-  String addr = '';
+  String? birth = '';
+  String? phone = '';
+  String? area = '';
+  String? addr = '';
 
   User();
 
@@ -38,7 +38,7 @@ class User {
     return "{id: '${reVal(id)}', username: '${reVal(username)}', email: '${reVal(email)}', gender: ${reVal(gender)}, birth: '${reVal(birth)}', phone: '${reVal(phone)}', area: '${reVal(area)}', addr: '${reVal(addr)}'}";
   }
 
-  String reVal(dynamic value) {
+  String? reVal(dynamic value) {
     if (value is String) {
       if (value.isEmpty) {
         return '';

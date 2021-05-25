@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'bootpay_api'
-  s.version          = '2.0.6'
+  s.version          = '3.0.0'
   s.summary          = 'Bootpay Flutter plugin.'
   s.description      = <<-DESC
 Bootpay Flutter plugin.
@@ -15,7 +15,7 @@ Bootpay Flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'SwiftyBootpay', '3.4.107'
+  s.dependency 'SwiftyBootpay', '3.4.2'
 
   s.static_framework = true
   # s.platform = :ios, '11.0'

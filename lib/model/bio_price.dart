@@ -1,6 +1,6 @@
 
 class BioPrice {
-  String name;
+  String? name;
   double price = 0.0;
 
   Map<String, dynamic> toJson() => {

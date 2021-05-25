@@ -12,24 +12,24 @@ import 'model/payload.dart';
 import 'model/user.dart';
 
 typedef void VoidCallback();
-typedef void StringCallback(String value);
+typedef void StringCallback(String? value);
 
 class BootpayApi {
   static const MethodChannel _channel = const MethodChannel('bootpay_api');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
+  static Future<String?> get platformVersion async {
+    final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
   static Future<void> request(BuildContext context, Payload payload,
-      {User user,
-      List<Item> items,
-      Extra extra,
-      StringCallback onDone,
-      StringCallback onReady,
-      StringCallback onCancel,
-      StringCallback onError}) async {
+      {User? user,
+      List<Item>? items,
+      Extra? extra,
+      StringCallback? onDone,
+      StringCallback? onReady,
+      StringCallback? onCancel,
+      StringCallback? onError}) async {
 
     payload.applicationId = Platform.isIOS
         ? payload.iosApplicationId
@@ -48,16 +48,16 @@ class BootpayApi {
     };
 
     try {
-      Map<dynamic, dynamic> result = await _channel.invokeMethod(
+      Map<dynamic, dynamic> result = await (_channel.invokeMethod(
         "bootpayRequest",
         params,
-      );
+      ) as FutureOr<Map<dynamic, dynamic>>);
 
 
-      String method = result["method"];
+      String? method = result["method"];
       if (method == null) method = result["action"];
 
-      String message = result["message"];
+      String? message = result["message"];
       if (message == null) message = result["msg"];
 
 
@@ -82,14 +82,14 @@ class BootpayApi {
   }
 
   static Future<void> requestBio(BuildContext context, BioPayload payload,
-      {User user,
-        List<Item> items,
-        Extra extra,
-        StringCallback onConfirm,
-        StringCallback onDone,
-        StringCallback onReady,
-        StringCallback onCancel,
-        StringCallback onError}) async {
+      {User? user,
+        List<Item>? items,
+        Extra? extra,
+        StringCallback? onConfirm,
+        StringCallback? onDone,
+        StringCallback? onReady,
+        StringCallback? onCancel,
+        StringCallback? onError}) async {
 
     payload.applicationId = Platform.isIOS
         ? payload.iosApplicationId
@@ -107,15 +107,15 @@ class BootpayApi {
       "extra": extra.toJson()
     };
 
-    Map<dynamic, dynamic> result = await _channel.invokeMethod(
+    Map<dynamic, dynamic> result = await (_channel.invokeMethod(
       "bootpayRequestBio",
       params,
-    );
+    ) as FutureOr<Map<dynamic, dynamic>>);
 
-    String method = result["method"];
+    String? method = result["method"];
     if (method == null) method = result["action"];
 
-    String message = result["message"];
+    String? message = result["message"];
     if (message == null) message = result["msg"];
 
     //confirm 생략
