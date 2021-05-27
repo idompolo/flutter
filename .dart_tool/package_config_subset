@@ -1,7 +1,7 @@
 bootpay_api
 2.12
-file:///Users/bootpay/AndroidProjects/bootpay/flutter/
-file:///Users/bootpay/AndroidProjects/bootpay/flutter/lib/
+file:///Users/bootpay/AndroidStudioProjects/flutter/
+file:///Users/bootpay/AndroidStudioProjects/flutter/lib/
 async
 2.12
 file:///Users/bootpay/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.5.0/

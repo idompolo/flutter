@@ -1,3 +1,6 @@
+## 3.0.1
+* 타입캐스팅 버그 수정, 사이드이펙트로 onDone, close등 함수가 호출되지 않았음      
+
 ## 3.0.0
 * null safety support, android & ios version update      
 

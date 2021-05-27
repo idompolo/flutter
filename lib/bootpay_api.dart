@@ -48,10 +48,14 @@ class BootpayApi {
     };
 
     try {
-      Map<dynamic, dynamic> result = await (_channel.invokeMethod(
+      Map<dynamic, dynamic> result = await _channel.invokeMethod(
         "bootpayRequest",
         params,
-      ) as FutureOr<Map<dynamic, dynamic>>);
+      );
+      // Map<dynamic, dynamic> result = await (_channel.invokeMethod(
+      //   "bootpayRequest",
+      //   params,
+      // ) as FutureOr<Map<dynamic, dynamic>>);
 
 
       String? method = result["method"];
