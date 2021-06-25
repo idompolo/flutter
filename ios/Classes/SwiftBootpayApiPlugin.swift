@@ -15,6 +15,10 @@ public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin, UIAdaptivePresentat
        goBootpayController(call.arguments as! Dictionary<String, Any>, result: result)
    } else if(call.method == "bootpayRequestBio") {
        goBootpayBioController(call.arguments as! Dictionary<String, Any>, result: result)
+   } else if(call.method == "removePaymentWindow") {
+//       goBootpayBioController(call.arguments as! Dictionary<String, Any>, result: result)
+    
+       removePaymentWindow()
    } else if(call.method == "getPlatformVersion") {
        result("i dont know")
    } else {
@@ -34,6 +38,11 @@ public class SwiftBootpayApiPlugin: NSObject, FlutterPlugin, UIAdaptivePresentat
    
    vc.presentationController?.delegate = vc
    rootViewController?.present(vc, animated: true, completion: nil)
+ }
+    
+ func removePaymentWindow() {
+    let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+    rootViewController?.dismiss(animated: true, completion: nil)
  }
     
     

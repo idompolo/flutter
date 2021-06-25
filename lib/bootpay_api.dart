@@ -85,6 +85,10 @@ class BootpayApi {
     }
   }
 
+  static Future<void> removePaymentWindow() async {
+    await (_channel.invokeMethod("removePaymentWindow"));
+  }
+
   static Future<void> requestBio(BuildContext context, BioPayload payload,
       {User? user,
         List<Item>? items,

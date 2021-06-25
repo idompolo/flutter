@@ -367,5 +367,6 @@ public class BootpayActivity extends FlutterActivity {
         resultIntent.putExtra("method", method);
         resultIntent.putExtra("message", message);
         setResult(9876, resultIntent);
+
     }
 }

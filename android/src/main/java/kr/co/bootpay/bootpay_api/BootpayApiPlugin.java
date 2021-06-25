@@ -48,6 +48,8 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
       goBootpayActivity(call.<Map<String, Object>>arguments());
     } else if(call.method.equals("bootpayRequestBio")) {
       goBootpayBioActivity(call.<Map<String, Object>>arguments());
+    } else if(call.method.equals("removePaymentWindow")) {
+      removePaymentWindow();
     } else {
       result.notImplemented();
     }
@@ -72,6 +74,10 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
     if(params.get("extra") != null) intent.putExtra("extra", new Gson().toJson(params.get("extra")));
     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
     this.activity.startActivityForResult(intent, BOOTPAY_REQUEST_CODE);
+  }
+
+  private void removePaymentWindow() {
+    this.activity.finishActivity(BOOTPAY_REQUEST_CODE);
   }
 
   @Override

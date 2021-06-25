@@ -1,3 +1,6 @@
+## 3.0.2
+* invokeMethod로 결제창을 닫을 수 있도록 removePaymentWindow 메소드 추가       
+
 ## 3.0.1
 * 타입캐스팅 버그 수정, 사이드이펙트로 onDone, close등 함수가 호출되지 않았음      
 

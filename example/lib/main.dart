@@ -11,6 +11,7 @@ import 'package:bootpay_api/model/item.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -30,6 +31,7 @@ class TestPage extends StatefulWidget {
 
 class TestPageState extends State<TestPage> {
 //  String _platformVersion = 'Unknown';
+
 
   @override
   void initState() {
@@ -52,6 +54,12 @@ class TestPageState extends State<TestPage> {
                 height: 100,
                 child: RaisedButton(
                   onPressed: () {
+
+                    // Future.delayed(const Duration(milliseconds: 8000), () {
+                    //   setState(() {
+                    //     BootpayApi.removePaymentWindow();
+                    //   });
+                    // });
                     goBootpayRequest(context);
                   },
                   child: Text("부트페이 결제요청"),
@@ -70,7 +78,10 @@ class TestPageState extends State<TestPage> {
               ),
             ],
           ),
-        )
+        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pop(context),
+      ),
     );
   }
 
@@ -122,6 +133,9 @@ class TestPageState extends State<TestPage> {
     extra.popup = 1;
     extra.quick_popup = 1;
 
+
+
+
     BootpayApi.request(
       context,
       payload,
@@ -138,6 +152,9 @@ class TestPageState extends State<TestPage> {
         print(' --- onError: $json');
       },
     );
+
+    // Timer.periodic(Duration(milliseconds: 10), (timer) {                     setState(() {                       _timerCount++;                     });                   });
+
   }
 
   void goBootpayRequestBio(String token) async {
