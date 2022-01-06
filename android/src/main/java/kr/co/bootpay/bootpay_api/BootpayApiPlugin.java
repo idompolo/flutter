@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.flutter.Log;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -19,7 +22,7 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /** BootpayApiPlugin */
-public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.ActivityResultListener{
+public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.ActivityResultListener, FlutterPlugin, ActivityAware {
   private Activity activity;
   private Context context;
   private MethodChannel.Result methodChannelResult;
@@ -36,6 +39,43 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
     final BootpayApiPlugin instance = new BootpayApiPlugin(registrar.activity(), registrar.activeContext());
     registrar.addActivityResultListener(instance);
     channel.setMethodCallHandler(instance);
+
+  }
+
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+    this.context = binding.getApplicationContext();
+    final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "bootpay_api");
+    channel.setMethodCallHandler(this);
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+
+  }
+
+  @Override
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    this.activity = binding.getActivity();
+    if(this.context == null) {
+      this.context = this.activity.getApplicationContext();
+    }
+    binding.addActivityResultListener(this);
+
+  }
+
+  @Override
+  public void onDetachedFromActivityForConfigChanges() {
+
+  }
+
+  @Override
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+
+  }
+
+  @Override
+  public void onDetachedFromActivity() {
 
   }
 
@@ -118,4 +158,7 @@ public class BootpayApiPlugin implements MethodCallHandler, PluginRegistry.Activ
     }
     return true;
   }
+
+
+
 }
